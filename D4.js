@@ -5,47 +5,48 @@
 //      .then(data => console.log(data))
 
 
-// function searchBooks(event) {
-//     const query = event.target.value;
-//     console.log(query)
-//      search(query)
+function searchBooks(event) {
+    const query = event.target.value;
+    console.log(query)
+     search()
     
-//      .then(response => response.json())
-//      .then(data => {
-//         // console logging the date of the search
-        
-//             const book = data
-//         // container for dynamic images
-//         const bookData = document.querySelector('.row')
-//         bookData.innerHTML = ''
+     .then(response => response.json())
+     .then(data => {
+         console.log(data)
+ 
+         const book = data
+ 
+         const bookData = document.querySelector('.row')
+         bookData.innerHTML = ''
+ 
+         book.forEach(book => {
+             let books = document.createElement('div')
+             books.className = 'img-fluid'
+             books.innerHTML = `       
+             <div  class="card mb-3 mr-3 " style="width: 18rem;">
+             <img src="${book.img}" class="card-img-top" alt="..."style="width: 18rem; height:400px">
+             <div class="card-body" style=" height:110px">
+             <h5 id="clamp" class="card-title">${book.title}</h5>
+             <p class="card-text m-0"></p>
+             </div>
+             <div  class="d-flex justify-content-between">
+             <a href="#" class="btn btn-warning mb-1">Add to cart</a>
+             <a href="#" class="btn btn-warning mb-1">Skip</a>
+             <div>
+           </div>`
+           bookData.appendChild(books)
+         })   
+     })
+     .catch(error => {
+       console.error(error)
+     })
+    }
+    
+    function search() {
+      return fetch("https://striveschool-api.herokuapp.com/books")      
+    }
 
-//         book.forEach(book => {
-//             let books = document.createElement('div')
-//             books.classList.add('img-fluid')
-//             books.innerHTML = `       
-//             <div  class="card mb-3 mr-3 " style="width: 18rem;">
-//             <img src="${book.img}" class="card-img-top" alt="..."style="width: 18rem; height:440px">
-//             <div class="card-body">
-//             <h5 id="clamp" class="card-title">${book.title}</h5>
-//             <p class="card-text">${book.price} Euros</p>
-//             </div>
-//             <button class="btn btn-primary onclick="${removeElement()}">Add to cart</button>
-//           </div>`
-//           bookData.appendChild(books)
-//         })    
-//      })
-//      .catch(error => {
-//        console.error(error)
-//      })
-//     }
     
-//     function search(query) {
-//       return fetch("https://striveschool-api.herokuapp.com/books" + query, {
-//         headers: {
-//           Authorization: apiKey,
-//         },
-//       })      
-//     }
 
 window.onload = () => {
     // searchBooks()
@@ -66,13 +67,15 @@ window.onload = () => {
             books.className = 'img-fluid'
             books.innerHTML = `       
             <div  class="card mb-3 mr-3 " style="width: 18rem;">
-            <img src="${book.img}" class="card-img-top" alt="..."style="width: 18rem; height:440px">
-            <div class="card-body">
+            <img src="${book.img}" class="card-img-top" alt="..."style="width: 18rem; height:400px">
+            <div class="card-body" style=" height:110px">
             <h5 id="clamp" class="card-title">${book.title}</h5>
-            <p class="card-text">${book.price} Euros</p>
+            <p class="card-text m-0"></p>
             </div>
-            <a href="#" class="btn btn-warning mb-1"  onclick="addToCart(event, '${book.title}', '${book.img}' )" >Add to cart</a>
-            <a href="#" class="btn btn-warning" onclick="skipBooks(event)" >Skip</a>
+            <div  class="d-flex justify-content-between">
+            <a href="#" class="btn btn-info mb-1 ml-1"  onclick="addToCart(event, '${book.title}', '${book.img}', '€${book.price}' )" >€ ${book.price}</a>
+            <a href="#" class="btn btn-warning mb-1" onclick="skipBooks(event)" >Skip</a>
+            <div>
           </div>`
           bookData.appendChild(books)
         })
@@ -85,25 +88,27 @@ window.onload = () => {
     })
 }
 
+// Creating the cart, first we need an empty array where we store our books
 const cartArrays = []
 
-const addToCart = (event, title, image) => {
+const addToCart = (event, title, image, price) => {
     // console.log(event.target)
     let bookEvent = event.target.closest('.img-fluid')
     // bookEvent.remove()
     cartArrays.push(bookEvent)
+// We are pushing our books into the cartArrays[]    
     let cart = document.getElementById('cart')
 
     let books = document.createElement('a')
-        books.style.color = 'blue'
         books.className = 'dropdown-item'
         books.innerHTML = ` <div class="d-flex">
-        <a id="remove" class="dropdown-item" href="#"><span><img src="${image}" alt="" width="25">
-        </span>${title}<span><a href="#" class="btn btn-warning mt-1 cart-btn" onclick="removeFromCart(event)">Remove</a></span></a>
+        <a href="#" id="remove" class="dropdown-item"><span><img src="${image}" alt="" width="25"></span>
+        <span>${title}</span><span class="ml-2" >${price}</span></a>
+        <a href="#" class="btn btn-danger mt-1 cart-btn" onclick="removeFromCart(event)">Remove</a></span></a>
         </div>
         `
         cart.appendChild(books)
- 
+ // We are filling and appending the book to our cartArrays
 }
 
  const skipBooks = (event) => {
@@ -119,6 +124,9 @@ const addToCart = (event, title, image) => {
  }
 
 
+const query = (event) => {
+    console.log(event.target.value)
+}
 
 
 
@@ -133,13 +141,5 @@ const addToCart = (event, title, image) => {
 
 
 
-
-// const addBook = (e) => {
-//     let list = document.querySelector('.img-fluid')
-//     let col = e.target.closest('.card')
-//     let title = e.target.closest('.card-body').querySelector('.card-text')
-//     list.appendChild(title)
-//     col.remove()
-// }
 
     

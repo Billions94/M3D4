@@ -1,3 +1,17 @@
+body {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(51,18,177,1) 100%, rgba(0,212,255,1) 100%);
+    color: white;
+}
+
+.card-body {
+    color: black;
+}
+
+.navbar {
+    background-color: transparent !important;
+}
+
 #clamp {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -10,4 +24,20 @@
     height: 2rem;
     margin-top: 7px;
     padding: 3px;
+}
+
+.searchBarDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.searchBar {
+    border-radius: 6px;
+    border: 1px dotted rgb(224, 185, 11);
+    width: 50%;  
+}
+
+.cart {
+    overflow-x: scroll;
 }

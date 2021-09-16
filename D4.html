@@ -11,16 +11,17 @@
     <title>Alex Books</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div  class="btn-group">
             <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Cart
             </button>
             <div id='cart' class="dropdown-menu">
- <!---                 ADD TO CART BOOKS                    ----->               
+ <!---                 ADD TO CART BOOKS                    ----->    
+            <a class="dropdown-item" href="#">Current items in your cart</a>
             <div class="dropdown-divider"></div>
 <!---                  SEPERATED LINKS FOR THE SKIP BOOKS                     ----->
-            <a class="dropdown-item" href="#"></a>
+            <!-- <a class="dropdown-item" href="#"></a> -->
             </div>
         </div>
       </nav>
@@ -29,8 +30,10 @@
 
  <!-- Example single danger button -->
 
+    <div class="searchBarDiv mb-2">
+    <input class="searchBar" type="text" placeholder="Search books" onchange="query(event)">
+    </div>
 
-    <input class="" type="search" placeholder="Search books">
     <div class="row ml-4">
  
     </div>
