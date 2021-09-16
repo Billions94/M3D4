@@ -4,3 +4,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.cart-btn {
+    width: 5rem;
+    height: 2rem;
+    margin-top: 7px;
+    padding: 3px;
+}
