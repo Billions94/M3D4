@@ -13,12 +13,12 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div  class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="bookCount()">
             Cart
             </button>
             <div id='cart' class="dropdown-menu">
  <!---                 ADD TO CART BOOKS                    ----->    
-            <a class="dropdown-item" href="#">Current items in your cart</a>
+            <a id="count" class="dropdown-item" href="#">Current items in your cart (0)</a>
             <div class="dropdown-divider"></div>
 <!---                  SEPERATED LINKS FOR THE SKIP BOOKS                     ----->
             <!-- <a class="dropdown-item" href="#"></a> -->
@@ -26,11 +26,11 @@
         </div>
       </nav>
 
-    <h1>Alex Books</h1>
+    <h1 class="text-center text-warning">Alex Books</h1>
 
  <!-- Example single danger button -->
 
-    <div class="searchBarDiv mb-2">
+    <div class="searchBarDiv mb-2 sticky-top">
     <input class="searchBar" type="text" placeholder="Search books" onchange="query(event)">
     </div>
 
