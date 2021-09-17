@@ -5,17 +5,21 @@ console.log(searchBooksArray)
 const query = (event) => {
     const query = event.target.value
     console.log(query)
-    if (query.length > 2) {
-        searchBooksArray.forEach(book, index => {
-            book.remove()
-        })
-    }
+    // if (query.length > 2) {
+    //     searchBooksArray.forEach(book, index => {
+    //         book.remove()
+    //     })
+    // }
+  
 
      search()
     .then(response => response.json())
     .then(data => {
         // console.log(data)
 
+        if (searchBooksArray.includes(query)){
+            return searchBooksArray
+        }
         const book = data
         let tempArray = []
         const bookData = document.querySelector('.row')
@@ -58,6 +62,7 @@ function search() {
     
 
 window.onload = () => {
+    query(event)
     // searchBooks()
 //EX 1
     fetch("https://striveschool-api.herokuapp.com/books")
@@ -123,6 +128,7 @@ const addToCart = (event, title, image, price) => {
         `
         cart.appendChild(books)
  // We are filling and appending the book to our cartArrays
+        bookCount()
 }
 
  const skipBooks = (event) => {
@@ -133,8 +139,11 @@ const addToCart = (event, title, image, price) => {
 
  const removeFromCart = (event) => {
     //  console.log(event.target)
+    resetCount(count)  
      let removeFromCart = event.target.closest('.dropdown-item')
         removeFromCart.remove()
+
+        // resetCount()     
  }
 
 const bookCount = () => {
@@ -142,9 +151,16 @@ const bookCount = () => {
         // console.log(cartArrays.length)
         let count = document.getElementById('count')
         count.innerHTML = `Current items in your cart  (${cartArrays.length})`
-    }
+    } 
 }
 
+const resetCount = (array) => {
+        console.log(cartArrays.length)
+    if (cartArrays.length > 0) {
+        let count = document.getElementById('count')
+        count.innerHTML = `Current items in your cart  (${cartArrays.length -1})`
+    } 
+}
 
 
 
