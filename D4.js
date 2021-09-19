@@ -64,6 +64,8 @@ function search() {
 window.onload = () => {
     query(event)
     // searchBooks()
+
+
 //EX 1
     fetch("https://striveschool-api.herokuapp.com/books")
 
@@ -151,10 +153,13 @@ const bookCount = () => {
         // console.log(cartArrays.length)
         let count = document.getElementById('count')
         count.innerHTML = `Current items in your cart  (${cartArrays.length})`
-    } 
+    } else if (cartArrays.length === 0) {
+        let count = document.getElementById('count')
+        count.innerHTML = `Current items in your cart  0`
+    }
 }
 
-const resetCount = (array) => {
+const resetCount = () => {
         console.log(cartArrays.length)
     if (cartArrays.length > 0) {
         let count = document.getElementById('count')
