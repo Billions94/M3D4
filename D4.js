@@ -155,7 +155,7 @@ const bookCount = () => {
         count.innerHTML = `Current items in your cart  (${cartArrays.length})`
     } else if (cartArrays.length === 0) {
         let count = document.getElementById('count')
-        count.innerHTML = `Current items in your cart  0`
+        count.innerHTML = `Current items in your cart  (0)`
     }
 }
 
