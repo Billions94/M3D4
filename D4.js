@@ -1,69 +1,126 @@
 
-let searchBooksArray = [];
-console.log(searchBooksArray)
+// let searchBooksArray = [];
+// console.log(searchBooksArray)
 
-const query = (event) => {
-    const query = event.target.value
-    console.log(query)
-    // if (query.length > 2) {
-    //     searchBooksArray.forEach(book, index => {
-    //         book.remove()
-    //     })
-    // }
+// const query = (event) => {
+//     const query = event.target.value
+//     if (query.length < 3) {
+//         filteredBooks = books;
+//         return;
+//       }
+//      search()
+//     .then(response => response.json())
+//     .then(data => {
+//         // console.log(data)
+
+//         if (searchBooksArray.includes(query)){
+//             return searchBooksArray
+//         }
+//         const book = data
+//         let tempArray = []
+//         const bookData = document.querySelector('.row')
+//         bookData.innerHTML = ''
+
+//         book.forEach(book => {
+//             let books = document.createElement('div')
+//             books.className = 'img-fluid'
+//             books.innerHTML = `       
+//             <div  class="card mb-3 mr-3 " style="width: 18rem;">
+//             <img src="${book.img}" class="card-img-top" alt="..."style="width: 18rem; height:400px">
+//             <div class="card-body" style=" height:110px">
+//             <h5 id="clamp" class="card-title">${book.title}</h5>
+//             <p class="card-text m-0"></p>
+//             </div>
+//             <div  class="d-flex justify-content-between">
+//             <a href="#" class="btn btn-primary mb-1 ml-1"  onclick="addToCart(event, '${book.title}', '${book.img}', '€${book.price}' )" >€ ${book.price}</a>
+//             <a href="#" class="btn btn-danger mb-1" onclick="skipBooks(event)" >Skip</a>
+//             <div>
+//           </div>`
+//           bookData.appendChild(books)
+//           tempArray.push(books)
+
+//         }) 
+//         filteredBooks = books.filter((book) =>
+//         book.title.toLowerCase().includes(query.toLowerCase())
+//       );
   
+//       console.log(filteredBooks);
+//       displayFilteredBooks(filteredBooks);
+//     })
+//     .catch(error => {
+//       console.error(error)
+//     })
+// }
 
-     search()
+let filteredBooks = []
+
+
+function search(query) {
+
+    get()
     .then(response => response.json())
-    .then(data => {
-        // console.log(data)
+    .then(data => { 
 
-        if (searchBooksArray.includes(query)){
-            return searchBooksArray
-        }
-        const book = data
-        let tempArray = []
-        const bookData = document.querySelector('.row')
-        bookData.innerHTML = ''
+           let books = data;
+           filteredBooks=[]
+           for (let i=0;i<books.length;i++){
 
-        book.forEach(book => {
-            let books = document.createElement('div')
-            books.className = 'img-fluid'
-            books.innerHTML = `       
+               if(books[i].title.toLowerCase().includes(query.toLowerCase())){
+                filteredBooks.push(books[i])
+                console.log(filteredBooks)
+    
+               }
+           }
+
+
+        books.filter((book) =>
+          console.log(book.title.toLowerCase().includes(query.toLowerCase()))
+        );
+        displayFilteredBooks(filteredBooks);
+     })
+ 
+
+    
+
+    console.log(filteredBooks);
+   
+  }
+
+ displayFilteredBooks = (books) => {
+        let row = document.querySelector(".row")
+        row.innerHTML = ""
+        books.forEach((book) => {
+            let img = book.img
+            let col = document.createElement('div')
+            col.classList = 'col-md-3'
+
+            col.innerHTML= `       
             <div  class="card mb-3 mr-3 " style="width: 18rem;">
             <img src="${book.img}" class="card-img-top" alt="..."style="width: 18rem; height:400px">
             <div class="card-body" style=" height:110px">
             <h5 id="clamp" class="card-title">${book.title}</h5>
-            <p class="card-text m-0"></p>
+            <p class="card-text m-0">${book.category}</p>
             </div>
             <div  class="d-flex justify-content-between">
-            <a href="#" class="btn btn-primary mb-1 ml-1"  onclick="addToCart(event, '${book.title}', '${book.img}', '€${book.price}' )" >€ ${book.price}</a>
-            <a href="#" class="btn btn-danger mb-1" onclick="skipBooks(event)" >Skip</a>
+            <a href="#" class="btn btn-info mb-1 ml-1"  onclick="addToCart(event, '${book.title}', '${book.img}', '€${book.price}' )" >€ ${book.price}</a>
+            <a href="#" class="btn btn-warning mb-1" onclick="skipBooks(event)" >Skip</a>
             <div>
           </div>`
-          bookData.appendChild(books)
-          tempArray.push(books)
+          row.appendChild(col)
+        })
 
-        }) 
-        // tempArray.filter(query => {
-        //     tempArray.includes(query)
-        //     console.log(tempArray)
-        // })  
-    })
-    .catch(error => {
-      console.error(error)
-    })
-}
+ }  
 
 
-function search() {
-    return fetch("https://striveschool-api.herokuapp.com/books")      
+function get() {
+    return fetch("https://striveschool-api.herokuapp.com/books")
+    
 }
 
     
 
 window.onload = () => {
-    query(event)
-    // searchBooks()
+    
 
 
 //EX 1
@@ -94,7 +151,6 @@ window.onload = () => {
             <div>
           </div>`
           bookData.appendChild(books)
-          searchBooksArray.push(book)
         })
         
 
@@ -104,6 +160,7 @@ window.onload = () => {
         console.log(err)
     })
 }
+
 
 // Creating the cart, first we need an empty array where we store our books
 const cartArrays = []
@@ -130,7 +187,8 @@ const addToCart = (event, title, image, price) => {
         `
         cart.appendChild(books)
  // We are filling and appending the book to our cartArrays
-        bookCount()
+        bookCount() // Calls the bookCount function
+        
 }
 
  const skipBooks = (event) => {
@@ -145,7 +203,7 @@ const addToCart = (event, title, image, price) => {
      let removeFromCart = event.target.closest('.dropdown-item')
         removeFromCart.remove()
 
-        // resetCount()     
+           
  }
 
 const bookCount = () => {
@@ -153,8 +211,7 @@ const bookCount = () => {
         // console.log(cartArrays.length)
         let count = document.getElementById('count')
         count.innerHTML = `Current items in your cart  (${cartArrays.length})`
-    } else if (cartArrays.length === 0) {
-        let count = document.getElementById('count')
+    } else {
         count.innerHTML = `Current items in your cart  (0)`
     }
 }
@@ -163,7 +220,7 @@ const resetCount = () => {
         console.log(cartArrays.length)
     if (cartArrays.length > 0) {
         let count = document.getElementById('count')
-        count.innerHTML = `Current items in your cart  (${cartArrays.length -1})`
+        count.innerHTML = `Current items in your cart  (0)`
     } 
 }
 
