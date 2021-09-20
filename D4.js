@@ -146,7 +146,7 @@ window.onload = () => {
             <p class="card-text m-0">${book.category}</p>
             </div>
             <div  class="d-flex justify-content-between">
-            <a href="#" class="btn btn-info mb-1 ml-1"  onclick="addToCart(event, '${book.title}', '${book.img}', '€${book.price}' )" >€ ${book.price}</a>
+            <a  class="btn btn-info mb-1 ml-1"  onclick="addToCart(event, '${book.title}', '${book.img}', '€${book.price}' )" >€ ${book.price}</a>
             <a href="#" class="btn btn-warning mb-1" onclick="skipBooks(event)" >Skip</a>
             <div>
           </div>`
@@ -163,13 +163,13 @@ window.onload = () => {
 
 
 // Creating the cart, first we need an empty array where we store our books
-const cartArrays = []
+const cartArray = []
 
 const addToCart = (event, title, image, price) => {
     // console.log(event.target)
     let bookEvent = event.target.closest('.img-fluid')
     // bookEvent.remove()
-    cartArrays.push(bookEvent)
+    cartArray.push(bookEvent)
 // We are pushing our books into the cartArrays[]    
     let cart = document.getElementById('cart')
 
@@ -199,30 +199,39 @@ const addToCart = (event, title, image, price) => {
 
  const removeFromCart = (event) => {
     //  console.log(event.target)
-    resetCount(count)  
+    
      let removeFromCart = event.target.closest('.dropdown-item')
         removeFromCart.remove()
+
+        cartArray.filter(books => {
+            if (cartArray.includes(event.target.value)){
+                removeFromCart(books)
+            }
+        })
+        
+
+        bookCount()
 
            
  }
 
 const bookCount = () => {
-    if(cartArrays.length > 0) {
+    if(cartArray.length > 0) {
         // console.log(cartArrays.length)
         let count = document.getElementById('count')
-        count.innerHTML = `Current items in your cart  (${cartArrays.length})`
-    } else {
+        count.innerHTML = `Current items in your cart  (${cartArray.length})`
+    } else if (cartArray.length < 1){
         count.innerHTML = `Current items in your cart  (0)`
     }
 }
 
-const resetCount = () => {
-        console.log(cartArrays.length)
-    if (cartArrays.length > 0) {
-        let count = document.getElementById('count')
-        count.innerHTML = `Current items in your cart  (0)`
-    } 
-}
+// const resetCount = () => {
+//         console.log(cartArrays.length)
+//     if (cartArrays.length < 1) {
+//         let count = document.getElementById('count')
+//         count.innerHTML = `Current items in your cart  (0)`
+//     } 
+// }
 
 
 
